@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Playlist extends Model
 {
-    use HasFactory;
+   use HasFactory;
+
+   protected $fillable = [
+      'thumbnail',
+      'name',
+      'description',
+      'price',
+      'slug',
+   ];
 }
