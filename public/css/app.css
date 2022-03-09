@@ -890,17 +890,17 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(238 242 255 / var(--tw-bg-opacity));
 }
-.bg-\[\#0d1117\] {
+.bg-gray-900 {
   --tw-bg-opacity: 1;
-  background-color: rgb(13 17 23 / var(--tw-bg-opacity));
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
-.bg-gray-900 {
+.bg-gray-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 .fill-current {
   fill: currentColor;
@@ -913,9 +913,6 @@ select {
 }
 .p-6 {
   padding: 1.5rem;
-}
-.p-4 {
-  padding: 1rem;
 }
 .px-4 {
   padding-left: 1rem;
