@@ -4,22 +4,22 @@
       <header class="font-medium px-2 uppercase text-xs text-gray-500">
          Main
       </header>
-      <a href="#" class="block text-gray-200 px-4 py-2">Dashboard</a>
+      <a href="{{ route('dashboard') }}" class="block text-gray-200 px-4 py-2">Dashboard</a>
    </div>
 
    {{-- Playlists --}}
-   @if (Auth::user()->can('create playlists'))
+   @can('create playlists')
       <div class="mb-8">
          <header class="font-medium px-2 uppercase text-xs text-gray-500">
             Playlists
          </header>
-         <a href="#" class="block text-gray-200 px-4 py-2">Create</a>
-         <a href="#" class="block text-gray-200 px-4 py-2">Table</a>
+         <a href="{{ route('playlists.create') }}" class="block text-gray-200 px-4 py-2">Create</a>
+         <a href="{{ route('playlists.table') }}" class="block text-gray-200 px-4 py-2">Table</a>
       </div>
-   @endif
+   @endcan
 
    {{-- Tags --}}
-   @if (Auth::user()->can('create tags'))
+   @can('create tags')
       <div class="mb-8">
          <header class="font-medium px-2 uppercase text-xs text-gray-500">
             Tags
@@ -27,7 +27,7 @@
          <a href="#" class="block text-gray-200 px-4 py-2">Create</a>
          <a href="#" class="block text-gray-200 px-4 py-2">Table</a>
       </div>
-   @endif
+   @endcan
 
    {{-- Users --}}
    @can('show users')
