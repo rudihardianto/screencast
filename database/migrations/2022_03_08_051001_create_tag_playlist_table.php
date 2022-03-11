@@ -13,9 +13,9 @@ return new class extends Migration
     */
    public function up()
    {
-      Schema::create('tag_playlist', function (Blueprint $table) {
-         $table->foreignId('tag_id');
+      Schema::create('playlist_tag', function (Blueprint $table) {
          $table->foreignId('playlist_id');
+         $table->foreignId('tag_id');
          $table->primary(['tag_id', 'playlist_id']);
       });
    }

@@ -65,4 +65,13 @@ class PlaylistController extends Controller
 
       return redirect()->route('playlists.table');
    }
+
+   public function destroy(Playlist $playlist)
+   {
+      //   dd($playlist);
+      $playlist->tags()->detach();
+      $playlist->delete();
+
+      return redirect()->route('playlists.table');
+   }
 }
