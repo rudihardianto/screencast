@@ -1,7 +1,8 @@
 <x-app-layout>
-   <x-slot name="title">Playlist Table</x-slot>
+   <x-slot name="title">Your Playlist</x-slot>
 
-   Playlist Table
+   <x-slot name="header">Your Playlist</x-slot>
+
    <x-table>
       <thead>
          <tr>
@@ -20,7 +21,8 @@
                <x-td>{{ $item->name }}</x-td>
                <x-td>{{ $item->created_at->format('d F Y') }}</x-td>
                <x-td>
-                  <a href="">Edit</a>
+                  <a class="px-4 py-2 text-sm rounded-lg text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 transition ease-in-out duration-150"
+                     href="{{ route('playlists.edit', $item->slug) }}">Edit</a>
                </x-td>
             </tr>
          @endforeach

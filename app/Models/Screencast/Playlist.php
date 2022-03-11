@@ -16,4 +16,10 @@ class Playlist extends Model
       'price',
       'slug',
    ];
+
+   public function getPictureAttribute()
+   {
+      return asset('storage/' . $this->thumbnail);
+   }
+
 }

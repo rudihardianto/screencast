@@ -22,6 +22,12 @@
 
          <!-- Page Content -->
          <main class="w-4/5 p-5">
+            @if ($header)
+               <h1 class="font-medium text-3xl mb-5 text-gray-800 leading-tight">
+                  {{ $header }}
+               </h1>
+            @endif
+
             {{ $slot }}
          </main>
       </div>

@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PlaylistRequest;
 use App\Models\Screencast\Playlist;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PlaylistController extends Controller
 {
    public function create()
    {
-      return view('playlists.create');
+      return view('playlists.create', [
+         'playlist' => new Playlist(),
+      ]);
    }
 
    public function store(PlaylistRequest $request)
@@ -37,4 +40,29 @@ class PlaylistController extends Controller
       ]);
    }
 
+   public function edit(Playlist $playlist)
+   {
+      return view('playlists.edit', [
+         'playlist' => $playlist,
+      ]);
+   }
+
+   public function update(PlaylistRequest $request, Playlist $playlist)
+   {
+      if ($request->thumbnail) {
+         Storage::delete($playlist->thumbnail);
+         $thumbnail = $request->file('thumbnail')->store('images/playlist');
+      } else {
+         $thumbnail = $playlist->thumbnail;
+      }
+
+      $playlist->update([
+         'thumbnail'   => $thumbnail,
+         'name'        => $request->name,
+         'description' => $request->description,
+         'price'       => $request->price,
+      ]);
+
+      return redirect()->route('playlists.table');
+   }
 }
