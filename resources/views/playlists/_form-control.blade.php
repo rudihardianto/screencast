@@ -46,5 +46,16 @@
    @enderror
 </div>
 
+<!-- Tag -->
+<div class="mb-5">
+   <x-label for="tags" value="Tags" />
+   <select name="tags[]" id="tags" multiple
+      class="mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+      @foreach ($tags as $tag)
+         <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+      @endforeach
+   </select>
+</div>
+
 <!-- Button -->
 <x-button>{{ $submit }}</x-button>

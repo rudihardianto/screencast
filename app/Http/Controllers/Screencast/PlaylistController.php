@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Screencast;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PlaylistRequest;
 use App\Models\Screencast\Playlist;
+use App\Models\Screencast\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,18 +16,21 @@ class PlaylistController extends Controller
    {
       return view('playlists.create', [
          'playlist' => new Playlist(),
+         'tags'     => Tag::get(),
       ]);
    }
 
    public function store(PlaylistRequest $request)
    {
-      Auth::user()->playlists()->create([
+      $playlist = Auth::user()->playlists()->create([
          'thumbnail'   => $request->file('thumbnail')->store('images/playlist'),
          'name'        => $request->name,
          'description' => $request->description,
          'price'       => $request->price,
          'slug'        => Str::slug($request->name . '-' . Str::random(6)),
       ]);
+
+      $playlist->tags()->sync($request->tags);
 
       return redirect()->route('playlists.table');
    }
@@ -44,6 +48,7 @@ class PlaylistController extends Controller
    {
       return view('playlists.edit', [
          'playlist' => $playlist,
+         'tags'     => Tag::get(),
       ]);
    }
 
@@ -63,12 +68,14 @@ class PlaylistController extends Controller
          'price'       => $request->price,
       ]);
 
+      $playlist->tags()->sync($request->tags);
+
       return redirect()->route('playlists.table');
    }
 
    public function destroy(Playlist $playlist)
    {
-      //   dd($playlist);
+      Storage::delete($playlist->thumbnail);
       $playlist->tags()->detach();
       $playlist->delete();
 

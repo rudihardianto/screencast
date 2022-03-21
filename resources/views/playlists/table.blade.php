@@ -18,7 +18,17 @@
                <x-td>
                   {{ $playlists->count() * ($playlists->currentPage() - 1) + $loop->iteration }}
                </x-td>
-               <x-td>{{ $item->name }}</x-td>
+               <x-td>
+                  <div>
+                     <div>
+                        {{ $item->name }}
+                     </div>
+                     <span class="text-xs">Tag:</span>
+                     @foreach ($item->tags as $tag)
+                        <span class="mr-1 text-xs">{{ $tag->name }}</span>
+                     @endforeach
+                  </div>
+               </x-td>
                <x-td>{{ $item->created_at->format('d F Y') }}</x-td>
                <x-td>
                   <div class="flex items-center gap-x-2">
