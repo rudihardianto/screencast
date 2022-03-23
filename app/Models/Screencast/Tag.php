@@ -9,6 +9,8 @@ class Tag extends Model
 {
    use HasFactory;
 
+   protected $guarded = [];
+
    public function playlists()
    {
       return $this->belongsToMany(Playlist::class);
