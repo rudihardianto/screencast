@@ -17,6 +17,9 @@ class Playlist extends Model
       'price',
       'slug',
    ];
+   protected $withCount = [
+      'videos',
+   ];
 
    public function getPictureAttribute()
    {
