@@ -1,30 +1,30 @@
 <x-app-layout>
    <x-slot name="title">{{ $title }}</x-slot>
-   <x-slot name="header">Tags Table</x-slot>
+
+   <x-slot name="header">{{ $title }}</x-slot>
 
    <x-table>
-      <tr>
-         <x-th>#</x-th>
-         <x-th>Name</x-th>
-         <x-th>Playlist</x-th>
-         @can('delete tags')
-            <x-th>Action</x-th>
-         @endcan
-      </tr>
-
-      @foreach ($tags as $tag)
+      <thead>
          <tr>
-            <x-td>{{ $tags->count() * ($tags->currentPage() - 1) + $loop->iteration }}</x-td>
-            <x-td>{{ $tag->name }}</x-td>
-            <x-td>{{ $tag->playlists_count }}</x-td>
-            @can('delete tags')
+            <x-th>#</x-th>
+            <x-th>Title</x-th>
+            <x-th>Intro</x-th>
+            <x-th>Action</x-th>
+         </tr>
+      </thead>
+      <tbody>
+         @foreach ($videos as $item)
+            <tr>
+               <x-td>{{ $videos->count() * ($videos->currentPage() - 1) + $loop->iteration }}</x-td>
+               <x-td>{{ $item->title }}</x-td>
+               <x-td>{{ $item->intro ? 'Yes' : 'No' }}</x-td>
                <x-td>
                   <div class="flex items-center gap-x-2">
                      <a class="px-2 py-1 text-sm rounded-lg text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 transition ease-in-out duration-150"
-                        href="{{ route('tags.edit', $tag->slug) }}">
+                        href="{{ route('videos.edit', [$playlist, $item->unique_video_id]) }}">
                         Edit
                      </a>
-                     <form action="{{ route('tags.delete', $tag->slug) }}" method="POST">
+                     <form action="{{ route('videos.delete', [$playlist, $item->unique_video_id]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
@@ -35,12 +35,10 @@
                      </form>
                   </div>
                </x-td>
-            @endcan
-         </tr>
-      @endforeach
+            </tr>
+         @endforeach
+      </tbody>
    </x-table>
 
-   <div class="mt-4">
-      {{ $tags->links() }}
-   </div>
+   {{ $videos->links() }}
 </x-app-layout>

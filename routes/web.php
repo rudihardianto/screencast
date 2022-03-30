@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Screencast\PlaylistController;
 use App\Http\Controllers\Screencast\TagController;
+use App\Http\Controllers\Screencast\VideoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,18 @@ Route::middleware('auth')->group(function () {
       Route::get('table', [PlaylistController::class, 'table'])->name('playlists.table');
    });
 
+   Route::prefix('videos')->middleware(['permission:create playlists'])->group(function () {
+      Route::get('create/into/{playlist:slug}', [VideoController::class, 'create'])->name('videos.create');
+      Route::post('create/into/{playlist:slug}', [VideoController::class, 'store'])->name('videos.store');
+
+      Route::get('edit/{playlist:slug}/{video:unique_video_id}', [VideoController::class, 'edit'])->name('videos.edit');
+      Route::put('edit/{playlist:slug}/{video:unique_video_id}', [VideoController::class, 'update']);
+
+      Route::delete('delete/{playlist:slug}/{video:unique_video_id}', [VideoController::class, 'destroy'])->name('videos.delete');
+
+      Route::get('table/{playlist:slug}', [VideoController::class, 'table'])->name('videos.table');
+   });
+
    Route::prefix('tags')->group(function () {
       Route::middleware('permission:create tags')->group(function () {
          Route::get('create', [TagController::class, 'create'])->name('tags.create');
@@ -31,7 +44,7 @@ Route::middleware('auth')->group(function () {
          Route::get('table', [TagController::class, 'table'])->name('tags.table');
       });
 
-      Route::middleware('permission:delete, edit tags')->group(function () {
+      Route::middleware(['permission:delete', 'permission:edit tags'])->group(function () {
          Route::get('{tag:slug}/edit', [TagController::class, 'edit'])->name('tags.edit');
          Route::put('{tag:slug}/edit', [TagController::class, 'update']);
 
