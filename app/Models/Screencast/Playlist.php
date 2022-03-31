@@ -3,8 +3,8 @@
 namespace App\Models\Screencast;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Playlist extends Model
 {
@@ -40,4 +40,10 @@ class Playlist extends Model
    {
       return $this->belongsTo(User::class);
    }
+
+   public function usersPurchases()
+   {
+      return $this->belongsToMany(User::class, 'purchased_playlist', 'playlist_id', 'user_id');
+   }
+
 }
