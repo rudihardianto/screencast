@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\order\Cart;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Screencast\Playlist;
 use Spatie\Permission\Traits\HasRoles;
@@ -67,4 +68,23 @@ class User extends Authenticatable
    {
       return (bool) $this->purchases()->find($playlist->id);
    }
+
+   public function carts()
+   {
+      return $this->hasMany(Cart::class);
+   }
+
+   public function addToCart(Playlist $playlist)
+   {
+      $this->carts()->create([
+         'playlist_id' => $playlist->id,
+         'price'       => $playlist->price,
+      ]);
+   }
+
+   public function alreadyInCart(Playlist $playlist)
+   {
+      return (bool) $this->carts()->where('playlist_id', $playlist->id)->count();
+   }
+
 }

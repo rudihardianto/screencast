@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\MeController;
+use App\Http\Controllers\Order\CartController;
 use App\Http\Controllers\Screencast\VideoController;
 use App\Http\Controllers\Screencast\PlaylistController;
 
@@ -15,4 +16,7 @@ Route::prefix('playlists')->group(function () {
 Route::middleware(['auth:sanctum'])->group(function () {
    Route::get('/me', MeController::class);
    Route::get('playlists/{playlist:slug}/{video:episode}', [VideoController::class, 'show']);
+
+   Route::get('carts', [CartController::class, 'index']);
+   Route::post('carts/{playlist:slug}', [CartController::class, 'store']);
 });
